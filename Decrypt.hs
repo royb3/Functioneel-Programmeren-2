@@ -15,13 +15,9 @@ module Main(main) where
 
   main :: IO()
   main = do
-    cipherFileContents <- readFile "cipher.txt"
-    keyFileContents <- readFile "key.txt"
-
-    let cipher = read cipherFileContents ::[Integer]
-    let key = read keyFileContents ::[Integer]
-
-    let plainText = map integerToChar $ crypt cipher key
+    cipher <- readFile "cipher.txt"
+    key <- readFile "key.txt"
+    let plainText = map integerToChar $ crypt (map integerFromChar cipher) (map integerFromChar key)
     writeFile "text.txt" $ show plainText
 
   integerFromChar :: Char -> Integer
@@ -32,4 +28,4 @@ module Main(main) where
 
 
   crypt :: [Integer] -> [Integer] -> [Integer]
-  crypt s k = zipWith xor s k
+  crypt s k = zipWith xor k s

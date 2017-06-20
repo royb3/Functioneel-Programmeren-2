@@ -18,11 +18,12 @@ module Main(main) where
     input <- readFile "text.txt"
     g <- newStdGen
     let key = take (length input) (randomRs (0, 255::Integer) g)
-    writeFile "key.txt" $ show key
+    writeFile "key.txt" $  map integerToChar key
     let encryptedText = crypt (map integerFromChar input) key
-    writeFile "cipher.txt" $ show encryptedText
+    writeFile "cipher.txt" $ map integerToChar encryptedText
     let test = crypt encryptedText key
-    writeFile "test.txt" $ show $ map integerToChar test
+    writeFile "test.txt" $ map integerToChar test
+
 
   integerFromChar :: Char -> Integer
   integerFromChar c = toInteger ( ord c )
