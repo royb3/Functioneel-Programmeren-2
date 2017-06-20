@@ -15,7 +15,7 @@ module Main(main) where
     g <- newStdGen
     let key = take (length input) (randomRs (33, 127::Integer) g)
     writeFile "key.txt" (map integerToChar key)
-    let encryptedText = crypt (map integerFromChar input) key
+    let encryptedText = encrypt (map integerFromChar input) key
     writeFile "ciphertext.txt" (map integerToChar encryptedText)
 
   integerFromChar :: Char -> Integer
@@ -25,4 +25,4 @@ module Main(main) where
   integerToChar i = chr $ fromInteger i
 
   crypt :: [Integer] -> [Integer] -> [Integer]
-  crypt s k = zipWith xor s k
+  encrypt s k = zipWith xor s k
