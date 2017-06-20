@@ -1,11 +1,6 @@
--- main :: IO()
--- main= do
---   input <- readFile "text.txt"
---   key <- randomList (0, 99) 10
---   mapM_ printChar input
-
 module Main(main) where
 
+  import System.Environment
   import Data.Bits (xor)
   import System.Random
   import System.IO
@@ -15,10 +10,11 @@ module Main(main) where
 
   main :: IO()
   main = do
-    cipher <- readFile "cipher.txt"
+    (filename:_) <- getArgs
+    input <- readFile filename
     key <- readFile "key.txt"
-    let plainText = map integerToChar $ crypt (map integerFromChar cipher) (map integerFromChar key)
-    writeFile "text.txt" $ show plainText
+    let decryptedText = decrypt (map integerFromChar input) (map integerFromChar key) 
+    writeFile "plaintext.txt" (map integerToChar decryptedText)
 
   integerFromChar :: Char -> Integer
   integerFromChar c = toInteger ( ord c )
@@ -26,6 +22,5 @@ module Main(main) where
   integerToChar :: Integer -> Char
   integerToChar i = chr $ fromInteger i
 
-
-  crypt :: [Integer] -> [Integer] -> [Integer]
-  crypt s k = zipWith xor k s
+  decrypt :: [Integer] -> [Integer] -> [Integer]
+  decrypt s k = zipWith xor s k
