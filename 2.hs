@@ -42,7 +42,9 @@ data Bag a = Bag a |
 bag :: a -> Bag a
 bag a = Bag a
 
-unbag :: a -> Bag a
+unbag :: Bag a ->   a
+unbag(Bag a) = a
+
 --5th excersize
 instance Functor Box where
   fmap f EmptyBox = EmptyBox
@@ -51,12 +53,19 @@ instance Functor Box where
 instance Functor Bag where
   fmap f EmptyBag = EmptyBag
   fmap f (Bag b) = Bag(f b)
+
 --6th excersize
 -- http://stackoverflow.com/questions/9139649/how-to-generate-a-list-which-contains-a-given-number-of-random-numbers-within-a
-randomList :: (Random a) => (a,a) -> Int -> StdGen -> [a]
-randomList bnds n = take n . randomRs bnds
+randomList :: (Int, Int) -> Int -> [Int] 
+randomList (a, b) c = take c $ randomRs (a, b) gen
+  where gen = mkStdGen c
 
-bagAndBox :: [Boek] -> [Box a]
-bagAndBox boekenlijst = map box (map bag boekenlijst)
-boxNumbers :: [Box a]
-boxNumbers = map box (randomList (0, 500) 10)
+list_of_boxed_numbers =  map box (randomList (1, 10) 10)
+bagsInBoxes = map box (map bag voorbeeldLijst)
+
+booksInBox :: [Geschrift] -> [Box a]
+booksInBox = map box map a
+
+--7th excersize
+data List x = Empty | List x
+  deriving (Eq, Ord, Show)
