@@ -56,15 +56,15 @@ instance Functor Bag where
 
 --6th excersize
 -- http://stackoverflow.com/questions/9139649/how-to-generate-a-list-which-contains-a-given-number-of-random-numbers-within-a
-randomList :: (Int, Int) -> Int -> [Int] 
+randomList :: (Int, Int) -> Int -> [Int]
 randomList (a, b) c = take c $ randomRs (a, b) gen
   where gen = mkStdGen c
 
 list_of_boxed_numbers =  map box (randomList (1, 10) 10)
 bagsInBoxes = map box (map bag voorbeeldLijst)
 
-booksInBox :: [Geschrift] -> [Box a]
-booksInBox = map box map a
+booksInBox :: [Geschrift] -> [Box Geschrift]
+booksInBox a = map box a
 
 --7th excersize
 data List x = Empty | List x
